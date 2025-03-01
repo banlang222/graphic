@@ -54,10 +54,8 @@ class Chart<D> extends StatefulWidget {
     this.gestureStream,
     this.resizeStream,
     this.changeDataStream,
-    this.blockGesture = false
   }) : super(key: key);
 
-  final blockGesture;
   /// The data list to visualize.
   final List<D> data;
 
@@ -239,13 +237,7 @@ class ChartState<D> extends State<Chart<D>> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return CustomSingleChildLayout(
       delegate: _ChartLayoutDelegate<D>(this),
-      child: widget.blockGesture ? RepaintBoundary(
-        child: CustomPaint(
-          // Make sure the Listener and the GestureDetector inflate the container.
-          size: Size.infinite,
-          painter: _ChartPainter<D>(this),
-        ),
-      ) : MouseRegion(
+      child: MouseRegion(
         child: Listener(
           child: GestureDetector(
             child: RepaintBoundary(
@@ -408,52 +400,52 @@ class ChartState<D> extends State<Chart<D>> with TickerProviderStateMixin {
                 chartKey: widget.key,
               ));
             },
-            onScaleEnd: (detail) {
-              view!.gesture(Gesture(
-                GestureType.scaleEnd,
-                gestureKind,
-                gestureLocalPosition,
-                size,
-                detail,
-                chartKey: widget.key,
-                localMoveStart: gestureLocalMoveStart,
-              ));
-              gestureLocalMoveStart = null;
-              gestureScaleDetail = null;
-            },
-            onScaleStart: (detail) {
-              gestureLocalPosition = detail.localFocalPoint;
-              gestureLocalMoveStart = detail.localFocalPoint;
-              // Mock a ScaleUpdateDetails so that the first scale update will have
-              // a preScaleDetail.
-              gestureScaleDetail = ScaleUpdateDetails(
-                focalPoint: detail.focalPoint,
-                localFocalPoint: detail.localFocalPoint,
-                pointerCount: detail.pointerCount,
-              );
-              view!.gesture(Gesture(
-                GestureType.scaleStart,
-                gestureKind,
-                gestureLocalPosition,
-                size,
-                detail,
-                chartKey: widget.key,
-              ));
-            },
-            onScaleUpdate: (detail) {
-              gestureLocalPosition = detail.localFocalPoint;
-              view!.gesture(Gesture(
-                GestureType.scaleUpdate,
-                gestureKind,
-                gestureLocalPosition,
-                size,
-                detail,
-                chartKey: widget.key,
-                localMoveStart: gestureLocalMoveStart,
-                preScaleDetail: gestureScaleDetail,
-              ));
-              gestureScaleDetail = detail;
-            },
+            // onScaleEnd: (detail) {
+            //   view!.gesture(Gesture(
+            //     GestureType.scaleEnd,
+            //     gestureKind,
+            //     gestureLocalPosition,
+            //     size,
+            //     detail,
+            //     chartKey: widget.key,
+            //     localMoveStart: gestureLocalMoveStart,
+            //   ));
+            //   gestureLocalMoveStart = null;
+            //   gestureScaleDetail = null;
+            // },
+            // onScaleStart: (detail) {
+            //   gestureLocalPosition = detail.localFocalPoint;
+            //   gestureLocalMoveStart = detail.localFocalPoint;
+            //   // Mock a ScaleUpdateDetails so that the first scale update will have
+            //   // a preScaleDetail.
+            //   gestureScaleDetail = ScaleUpdateDetails(
+            //     focalPoint: detail.focalPoint,
+            //     localFocalPoint: detail.localFocalPoint,
+            //     pointerCount: detail.pointerCount,
+            //   );
+            //   view!.gesture(Gesture(
+            //     GestureType.scaleStart,
+            //     gestureKind,
+            //     gestureLocalPosition,
+            //     size,
+            //     detail,
+            //     chartKey: widget.key,
+            //   ));
+            // },
+            // onScaleUpdate: (detail) {
+            //   gestureLocalPosition = detail.localFocalPoint;
+            //   view!.gesture(Gesture(
+            //     GestureType.scaleUpdate,
+            //     gestureKind,
+            //     gestureLocalPosition,
+            //     size,
+            //     detail,
+            //     chartKey: widget.key,
+            //     localMoveStart: gestureLocalMoveStart,
+            //     preScaleDetail: gestureScaleDetail,
+            //   ));
+            //   gestureScaleDetail = detail;
+            // },
             onSecondaryLongPress: () {
               view!.gesture(Gesture(
                 GestureType.secondaryLongPress,

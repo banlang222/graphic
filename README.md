@@ -1,7 +1,5 @@
 # Graphic
-
-#本地化增加了屏蔽手势捕捉，防止触屏划不动页面
-
+## 屏蔽了Chart 对scale动作的监听，防止划不动
 <p align="left">
 <a href="https://pub.dev/packages/graphic">
 <img src="https://img.shields.io/pub/v/graphic.svg" />
@@ -12,24 +10,6 @@ Graphic is a grammar of data visualization and Flutter charting library.
 - **Flexible declarative grammar**: This visualization grammar derives from Leland Wilkinson's *The Grammar of Graphics*, and tries to balance between theoretical beauty and practicability. Data processing steps and mark shapes can be composed freely in a declarative specification, not limited to certain chart types. And shape draw methods are customizable.
 - **Interaction**: With the *event* and *selection* definition, the chart is highly interactive, such as highlighting selected items, popping a tooltip, or scaling the coordinate.
 - **Animation**: Mark transition animation can be set when a chart is built or changed. The entrance animation has various forms.
-
-## What's new in v2.0
-
-- Add feature of transition animation, see details in `Mark.transition`. And thus the rendering engine is rewrited. The imperative `Figure` classes are changed to declarative `MarkElement` classes. See details in this folder: https://github.com/entronad/graphic/tree/main/lib/src/graffiti/element
-
-- Update terminology to keep same with modern mainstream data visualization libraries. Some class names have changed:
-
-  `GeomElement -> Mark`
-
-  `Attr -> Encode`
-
-  `Signal -> Event`
-
-  `Channel -> Stream`
-
-  `Figure -> MarkElement`
-
-  And thus some properties related are also changed, like `elements -> marks`.
 
 ## Documentation
 
@@ -73,3 +53,5 @@ Graphic is [MIT License](https://github.com/entronad/graphic/blob/main/LICENSE).
 [Medium](https://medium.com/@entronad)
 
 [Zhihu](https://www.zhihu.com/people/entronad)
+
+Thanks for reading.

@@ -26,6 +26,7 @@ import 'package:graphic/src/coord/rect.dart';
 import 'package:graphic/src/data/data_set.dart';
 import 'package:graphic/src/dataflow/operator.dart';
 import 'package:graphic/src/graffiti/element/element.dart';
+import 'package:graphic/src/graffiti/element/label.dart';
 import 'package:graphic/src/mark/mark.dart';
 import 'package:graphic/src/mark/modifier/modifier.dart';
 import 'package:graphic/src/guide/annotation/custom.dart';
@@ -101,10 +102,12 @@ void parse<D>(
 
   final coordSpec = spec.coord ?? RectCoord();
 
+  final regionPadding = spec.padding ??
+      (coordSpec is RectCoord ? _defaultRectPadding : _defaultPolarPadding);
+
   final region = view.add(RegionOp({
     'size': size,
-    'padding': spec.padding ??
-        (coordSpec is RectCoord ? _defaultRectPadding : _defaultPolarPadding),
+    'padding': regionPadding,
   }));
 
   if (coordSpec.color != null) {
@@ -538,6 +541,8 @@ void parse<D>(
         'labelMapper': axisSpec.labelMapper,
         'grid': axisSpec.grid,
         'gridMapper': axisSpec.gridMapper,
+        'labelBackground': axisSpec.labelBackground,
+        'labelBackgroundMapper': axisSpec.labelBackgroundMapper,
       }));
 
       final axisScene = view.graffiti.createScene(
@@ -650,18 +655,43 @@ void parse<D>(
 
     final crosshairScene = view.graffiti.createScene(
         layer: crosshairSpec.layer ?? 0, builtinLayer: BuiltinLayers.crosshair);
+    final showLabel = crosshairSpec.showLabel ?? [false, false];
     view.add(CrosshairRenderOp({
       'selections': crosshairSpec.selections ?? spec.selections!.keys.toSet(),
       'selectors': selectors!,
       'selected': selectOpList[markIndex],
       'coord': coord,
       'groups': groupsList[markIndex],
+      'tuples': tuples,
       'styles': crosshairSpec.styles ??
           [
-            PaintStyle(strokeColor: const Color(0xffbfbfbf)),
-            PaintStyle(strokeColor: const Color(0xffbfbfbf)),
+            PaintStyle(
+                strokeColor: showLabel[0]
+                    ? const Color(0xff000000)
+                    : const Color(0xffbfbfbf)),
+            PaintStyle(
+                strokeColor: showLabel[1]
+                    ? const Color(0xff000000)
+                    : const Color(0xffbfbfbf)),
           ],
+      'labelStyles': crosshairSpec.labelStyles ??
+          [
+            LabelStyle(textStyle: const TextStyle(color: Color(0xffffffff))),
+            LabelStyle(textStyle: const TextStyle(color: Color(0xffffffff))),
+          ],
+      'labelBackgroundStyles': crosshairSpec.labelBackgroundStyles ??
+          [
+            PaintStyle(fillColor: const Color(0xff000000)),
+            PaintStyle(fillColor: const Color(0xff000000)),
+          ],
+      'labelPaddings': crosshairSpec.labelPaddings ?? [0.0, 0.0],
+      'showLabel': showLabel,
+      'formatter': crosshairSpec.formatter ?? [null, null],
       'followPointer': crosshairSpec.followPointer ?? [false, false],
+      'scales': scales,
+      'size': size,
+      'padding': regionPadding,
+      'expandEdges': crosshairSpec.expandEdges ?? [false, false, false, false],
     }, crosshairScene, view));
   }
 

@@ -1,5 +1,5 @@
 /// Graphic provides a Flutter charting library for data visualization. it has a
-/// chart widget, classes for specification, and some util classes and funtions
+/// chart widget, classes for specification, and some util classes and functions
 /// for customization.
 ///
 /// To use this charting library, you only need to do one thing: to create a [Chart]
@@ -178,7 +178,12 @@ export 'src/shape/util/style.dart' show getPaintStyle;
 
 export 'src/graffiti/transition.dart' show Transition;
 export 'src/graffiti/element/element.dart'
-    show MarkElement, PaintStyle, PrimitiveElement, getBlockPaintPoint;
+    show
+        MarkElement,
+        ElementStyle,
+        PaintStyle,
+        PrimitiveElement,
+        getBlockPaintPoint;
 export 'src/graffiti/element/arc.dart' show ArcElement;
 export 'src/graffiti/element/circle.dart' show CircleElement;
 export 'src/graffiti/element/group.dart' show GroupElement;
@@ -207,7 +212,13 @@ export 'src/coord/polar.dart' show PolarCoord, PolarCoordConv;
 export 'src/coord/rect.dart' show RectCoord, RectCoordConv;
 
 export 'src/guide/axis/axis.dart'
-    show TickLine, TickLineMapper, LabelMapper, GridMapper, AxisGuide;
+    show
+        TickLine,
+        TickLineMapper,
+        LabelMapper,
+        LabelBackgroundMapper,
+        GridMapper,
+        AxisGuide;
 export 'src/guide/interaction/tooltip.dart' show TooltipGuide, TooltipRenderer;
 export 'src/guide/interaction/crosshair.dart' show CrosshairGuide;
 export 'src/guide/annotation/annotation.dart' show Annotation;

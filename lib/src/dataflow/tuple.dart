@@ -47,6 +47,7 @@ class Attributes {
   /// The index of the tuple in all tuples list.
   final int index;
 
+  /// The tag of the tuple.
   final String? tag;
 
   /// Position points of the tuple.
@@ -155,7 +156,7 @@ class Attributes {
                 span: rst.label!.style.span,
                 textAlign: rst.label!.style.textAlign,
                 textDirection: rst.label!.style.textDirection,
-                textScaleFactor: rst.label!.style.textScaleFactor,
+                textScaler: rst.label!.style.textScaler,
                 maxLines: rst.label!.style.maxLines,
                 ellipsis: rst.label!.style.ellipsis,
                 locale: rst.label!.style.locale,
